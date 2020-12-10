@@ -1,42 +1,44 @@
 package com.mystic.muid;
 
-import com.mystic.muid.proxy.CommonProxy;
-import com.mystic.muid.util.handler.RegistryHandler;
 import com.mystic.muid.util.reference;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.logging.Logger;
 
-@Mod(modid = reference.MODID, name = reference.NAME, version = reference.VERSION)
-public class main {
+// The value here should match an entry in the META-INF/mods.toml file
+@Mod(reference.MODID)
+public class main
+{
+    // Directly reference a log4j logger.
+    private static final Logger LOGGER = LogManager.getLogger();
 
-    @Mod.Instance(reference.MODID)
-    public static main INSTANCE;
+    public main() {
+        // Register the setup method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        // Register the enqueueIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        // Register the processIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        // Register the doClientStuff method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-    public static Logger logger;
-
-    @SidedProxy(clientSide = reference.CLIENT_PROXY_CLASS, serverSide = reference.COMMON_PROXY_CLASS)
-    public static CommonProxy proxy;
-
-    @Mod.EventHandler
-    public void PreInit(FMLPreInitializationEvent event)
-    {
-        RegistryHandler.preInitRegistries(event);
+        // Register ourselves for server and other game events we are interested in
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        RegistryHandler.initRegistries(event);
-    }
+    private void setup(final FMLCommonSetupEvent event) {}
 
-    @Mod.EventHandler
-    public void PostInit(FMLPostInitializationEvent event)
-    {
-        RegistryHandler.postInitRegistries(event);
-    }
+    private void doClientStuff(final FMLClientSetupEvent event) {}
+
+    private void enqueueIMC(final InterModEnqueueEvent event) {}
+
+    private void processIMC(final InterModProcessEvent event) {}
+
 }
