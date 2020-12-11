@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "muid",
+  "version": "1.0.0-12.11.2020-1.16.4-fabric",
+
+  "name": "MUID",
+  "description": "For finding the total id's of popular ids",
+  "authors": [
+    "Mysticpasta1"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/Mysticpasta1/Most-Used-IDs"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/muid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mystic.muid.Main"
+    ]
+  },
+  "mixins": [
+    "muid.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
