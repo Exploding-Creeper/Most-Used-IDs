@@ -14,7 +14,7 @@ buildscript {
 apply plugin: "net.minecraftforge.gradle.forge"
 
 group = 'com.mystic.MUID'
-version = '1.0.0-12.10.2020'
+version = '1.2.0-12.12.2020-1.12.2-forge'
 archivesBaseName = 'muid'
 
 minecraft {
