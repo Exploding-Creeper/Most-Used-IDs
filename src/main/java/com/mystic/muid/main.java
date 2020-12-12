@@ -1,5 +1,8 @@
 package com.mystic.muid;
 
+import com.mystic.muid.helper.event.DebugInfoEvent;
+import com.mystic.muid.setup.ClientSetup;
+import com.mystic.muid.setup.ModSetup;
 import com.mystic.muid.util.reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -20,25 +23,7 @@ public class main
     private static final Logger LOGGER = LogManager.getLogger();
 
     public main() {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-        // Register the doClientStuff method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
     }
-
-    private void setup(final FMLCommonSetupEvent event) {}
-
-    private void doClientStuff(final FMLClientSetupEvent event) {}
-
-    private void enqueueIMC(final InterModEnqueueEvent event) {}
-
-    private void processIMC(final InterModProcessEvent event) {}
-
 }
