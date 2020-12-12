@@ -1,0 +1,22 @@
+ 
+minecraft
+Number of Biome IDs Registered: 62
+Number of Block IDs Registered: 254
+Number of Item IDs Registered: 411
+Number of Potion IDs Registered: 27
+Number of Enchantment IDs Registered: 30
+Number of Entity IDs Registered: 83
+ 
+mcp
+ 
+FML
+ 
+forge
+ 
+muid
+ 
+aztech
+Number of Biome IDs Registered: 4
+Number of Block IDs Registered: 45
+Number of Item IDs Registered: 108
+Number of Entity IDs Registered: 5

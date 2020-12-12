@@ -1,30 +1,46 @@
 package com.mystic.muid.helper.events;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.File;
+import java.io.IOException;
 
-
-@Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber
 public class DebugInfoEvent {
-    @SubscribeEvent
+
+    @SubscribeEvent()
+    @SideOnly(Side.CLIENT)
     public static void RenderGameOverlayEvent(RenderGameOverlayEvent.Text event) {
         if (Minecraft.getMinecraft().gameSettings.showDebugInfo) {
-            event.getRight().add("Number of Biome IDs Registered: " + Biome.REGISTRY.getKeys().size());
-            event.getRight().add("Number of Dimension IDs Registered: " + DimensionManager.getIDs().length);
-            event.getRight().add("Number of Block IDs Registered: " + Block.REGISTRY.getKeys().size());
-            event.getRight().add("Number of Item IDs Registered: " + Item.REGISTRY.getKeys().size());
-            event.getRight().add("Number of Potion IDs Registered: " + Potion.REGISTRY.getKeys().size());
-            event.getRight().add("Number of Enchantment IDs Registered: " + Enchantment.REGISTRY.getKeys().size());
+            event.getRight().add("Number of Biome IDs Registered: " + ForgeRegistries.BIOMES.getKeys().size());
+            event.getRight().add("Number of Block IDs Registered: " + ForgeRegistries.BLOCKS.getKeys().size());
+            event.getRight().add("Number of Item IDs Registered: " + ForgeRegistries.ITEMS.getKeys().size());
+            event.getRight().add("Number of Potion IDs Registered: " + ForgeRegistries.POTIONS.getKeys().size());
+            event.getRight().add("Number of Enchantment IDs Registered: " + ForgeRegistries.ENCHANTMENTS.getKeys().size());
+            event.getRight().add("Number of Entity IDs Registered: " + ForgeRegistries.ENTITIES.getKeys().size());
+        }
+    }
+
+    public static void deleteFile(){
+
+    }
+
+    public static void createFile(){
+        File myObj = new File("MUIDoutput.txt");
+        try {
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
