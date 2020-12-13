@@ -1,16 +1,16 @@
 [
-    {
-        "modid": "muid",
-        "name": "MUID",
-        "description": "For finding the total id's of popular ids",
-        "version": "1.2.0-12.12.2020.1.12.2-forge",
-        "mcversion": "1.12.2",
-        "url": "",
-        "updateUrl": "",
-        "authorList": ["Mysticpasta1"],
-        "credits": "",
-        "logoFile": "",
-        "screenshots": [],
-        "dependencies": []
-    }
+  {
+    "modid": "muid",
+    "name": "MUID",
+    "description": "For finding the total id's of popular ids",
+    "version": "1.0.0-12.14.2020-1.15.2-forge",
+    "mcversion": "1.12.2",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Mysticpasta1"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]

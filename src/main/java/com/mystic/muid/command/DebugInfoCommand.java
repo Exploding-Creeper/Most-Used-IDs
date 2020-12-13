@@ -1,49 +1,34 @@
 package com.mystic.muid.command;
 
-import net.minecraft.block.Block;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
-import net.minecraft.server.MinecraftServer;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
 
-public class DebugInfoCommand extends CommandBase
-{
+public class DebugInfoCommand implements Command<CommandSource> {
 
-    @Override
-    public String getName() {
-        return "moddebuginfo";
-    }
+    private static final DebugInfoCommand CMD = new DebugInfoCommand();
 
-    public int getRequiredPermissionLevel()
-    {
-        return 3;
+    public static ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
+        return Commands.literal("moddebuginfo")
+                .requires(cs -> cs.hasPermissionLevel(3))
+                .executes(CMD);
     }
 
     @Override
-    public String getUsage(ICommandSender sender) {
-        return "commands.moddebuginfo.usage";
-    }
-
-    @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-
-        List<ModContainer> mods = Loader.instance().getModList();
+    public int run(CommandContext<CommandSource> context){
 
         try {
-
 
             String lineFromInput1 = " ";
 
@@ -51,41 +36,48 @@ public class DebugInfoCommand extends CommandBase
             PrintStream out = new PrintStream(new FileOutputStream("MUIDoutput.txt", append));
             System.setOut(out);
 
-            mods.forEach((modContainer -> {
+            ModList.get().getMods().forEach((modContainer -> {
+
                 int a = 0;
-                for (ResourceLocation resourceLocation : Biome.REGISTRY.getKeys()) {
+                for (ResourceLocation resourceLocation : ForgeRegistries.BIOMES.getKeys()) {
                     if (resourceLocation.toString().contains(modContainer.getModId())) {
                         a++;
                     }
                 }
                 int b = 0;
-                for (ResourceLocation resourceLocation : Block.REGISTRY.getKeys()) {
+                for (ResourceLocation resourceLocation : ForgeRegistries.BLOCKS.getKeys()) {
                     if (resourceLocation.toString().contains(modContainer.getModId())) {
                         b++;
                     }
                 }
                 int c = 0;
-                for (ResourceLocation resourceLocation : Item.REGISTRY.getKeys()) {
+                for (ResourceLocation resourceLocation : ForgeRegistries.ITEMS.getKeys()) {
                     if (resourceLocation.toString().contains(modContainer.getModId())) {
                         c++;
                     }
                 }
                 int d = 0;
-                for (ResourceLocation resourceLocation : Potion.REGISTRY.getKeys()) {
+                for (ResourceLocation resourceLocation : ForgeRegistries.POTIONS.getKeys()) {
                     if (resourceLocation.toString().contains(modContainer.getModId())) {
                         d++;
                     }
                 }
                 int e = 0;
-                for (ResourceLocation resourceLocation : Enchantment.REGISTRY.getKeys()) {
+                for (ResourceLocation resourceLocation : ForgeRegistries.ENCHANTMENTS.getKeys()) {
                     if (resourceLocation.toString().contains(modContainer.getModId())) {
                         e++;
                     }
                 }
                 int f = 0;
-                for (ResourceLocation resourceLocation : ForgeRegistries.ENTITIES.getKeys()) {
+                for (ResourceLocation resourceLocation : ForgeRegistries.TILE_ENTITIES.getKeys()) {
                     if (resourceLocation.toString().contains(modContainer.getModId())) {
                         f++;
+                    }
+                }
+                int g = 0;
+                for (ResourceLocation resourceLocation : ForgeRegistries.ENTITIES.getKeys()) {
+                    if (resourceLocation.toString().contains(modContainer.getModId())) {
+                        g++;
                     }
                 }
 
@@ -108,17 +100,23 @@ public class DebugInfoCommand extends CommandBase
                     out.println("Number of Enchantment IDs Registered: " + e);
                 }
                 if(f > 0){
-                    out.println("Number of Entity IDs Registered: " + f);
+                    out.println("Number of Tile Entity IDs Registered: " + f);
+                }
+                if(g > 0){
+                    out.println("Number of Entity IDs Registered: " + g);
                 }
             }));
 
             //close the file (VERY IMPORTANT!)
             out.close();
 
-            notifyCommandListener(sender, this, "Mod Debug File Written :)");
+            context.getSource().sendFeedback(new TranslationTextComponent("Mod Debug File Written :)"), false);
+
         } catch (IOException e) {
             System.out.println("Error during reading/writing");
             e.printStackTrace();
         }
+        return 0;
     }
 }
+
