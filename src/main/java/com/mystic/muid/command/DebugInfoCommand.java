@@ -115,6 +115,7 @@ public class DebugInfoCommand implements Command<CommandSource> {
 
         } catch (IOException e) {
             System.out.println("Error during reading/writing");
+            e.printStackTrace();
         }
         return 0;
     }
