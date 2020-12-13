@@ -118,6 +118,7 @@ public class DebugInfoCommand extends CommandBase
             notifyCommandListener(sender, this, "Mod Debug File Written :)");
         } catch (IOException e) {
             System.out.println("Error during reading/writing");
+            e.printStackTrace();
         }
     }
 }
