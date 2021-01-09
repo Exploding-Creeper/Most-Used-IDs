@@ -38,4 +38,17 @@ public class DebugInfoEvent implements HudRenderCallback {
             }
         }
     }
+
+    public static void createFile(){
+        File myObj = new File("MUIDoutput.txt");
+        try {
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
