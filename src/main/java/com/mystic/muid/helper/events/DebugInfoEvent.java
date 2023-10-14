@@ -27,12 +27,21 @@ public class DebugInfoEvent {
         }
     }
 
-    public static void deleteFile(){
-
-    }
-
     public static void createFile(){
         File myObj = new File("MUIDoutput.txt");
+        try {
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createVillagerRecipeList(){
+        File myObj = new File("VillagerTradingInfo.txt");
         try {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());

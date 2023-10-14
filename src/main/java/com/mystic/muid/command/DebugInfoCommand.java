@@ -38,17 +38,14 @@ public class DebugInfoCommand extends CommandBase
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
 
         List<ModContainer> mods = Loader.instance().getModList();
 
         try {
-
-
             String lineFromInput1 = " ";
 
-            boolean append = false;
-            PrintStream out = new PrintStream(new FileOutputStream("MUIDoutput.txt", append));
+            PrintStream out = new PrintStream(new FileOutputStream("MUIDoutput.txt", false));
             System.setOut(out);
 
             mods.forEach((modContainer -> {

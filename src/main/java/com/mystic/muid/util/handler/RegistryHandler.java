@@ -1,6 +1,7 @@
 package com.mystic.muid.util.handler;
 
 import com.google.common.collect.Maps;
+import com.mystic.muid.command.DebugInfoCommand;
 import com.mystic.muid.helper.events.DebugInfoEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
@@ -14,21 +15,9 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class RegistryHandler {
-
-
-
     public static void preInitRegistries(FMLPreInitializationEvent event)
     {
         DebugInfoEvent.createFile();
-    }
-
-    public static void initRegistries(FMLInitializationEvent event)
-    {
-
-    }
-
-    public static void postInitRegistries(FMLPostInitializationEvent event)
-    {
-
+        DebugInfoEvent.createVillagerRecipeList();
     }
 }
